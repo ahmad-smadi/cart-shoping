@@ -25,10 +25,7 @@ function populateForm() {
 // so that it shows the # of items in the cart and a quick preview of the cart itself.
 function handleSubmit(event) {
   event.preventDefault();
-
-  
   // TODO: Prevent the page from reloading
-
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
@@ -36,6 +33,7 @@ function handleSubmit(event) {
   updateCartPreview();
 
 }
+let count = document.getElementById('itemCount');
 let cartContents = document.getElementById('cartContents');
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
@@ -44,16 +42,18 @@ function addSelectedItemToCart() {
   // TODO: using those, add one item to the Cart
   
   //cartContents.textContent = `${items} , ${quantity}`
-  let items = event.target.items.value;
-  let quantity = event.target.quantity.value;
-   
-  cartContents.textContent = `${items} , ${quantity}` ;
-  
+    let items = event.target.items.value;
+    let quantity = event.target.quantity.value;
+     
+    //cartContents.textContent = `${items} , ${quantity}` ;
+    let newC = [items, quantity];
+    cart.addItem(newC);
 }
 let counter = 0;
 // TODO: Update the cart count in the header nav with the number of items in the Cart
 function updateCounter() {
-counter++;
+  counter++;
+  count.textContent = counter;
 }
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
@@ -62,8 +62,14 @@ function updateCartPreview() {
   // TODO: Add a new element to the cartContents div with that information
   let items = event.target.items.value;
   let quantity = event.target.quantity.value;
-   
-  cartContents.textContent = `${items} , ${quantity}` ;
+   let ListItems = document.createElement('ul');
+   ListItems.setAttribute('class', 'card');
+   ListItems.setAttribute('id', 'cartContents');
+   cartContents.classList.remove('card');
+   cartContents.appendChild(ListItems);
+   let listItem = document.createElement('li');
+   ListItems.appendChild(listItem);
+   listItem.textContent = `${items} , ${quantity}` ;
 }
 
 // Set up the "submit" event listener on the form.
