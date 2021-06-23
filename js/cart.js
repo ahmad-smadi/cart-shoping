@@ -1,6 +1,6 @@
 /* global Cart */
 'use strict';
-let tBody = document.getElementsByTagName('tbody');
+
 // Create an event listener so that when the delete link is clicked, the removeItemFromCart method is invoked.
 const table = document.getElementById('cart');
 table.addEventListener('click', removeItemFromCart);
@@ -20,7 +20,7 @@ function renderCart() {
 
 // TODO: Remove all of the rows (tr) in the cart table (tbody)
 function clearCart() {
-  table.remove();
+  //table.remove();
 }
 
 // TODO: Fill in the <tr>'s under the <tbody> for each item in the cart
@@ -32,25 +32,27 @@ function showCart() {
   // TODO: Create a TR
   // TODO: Create a TD for the delete link, quantity,  and the item
   // TODO: Add the TR to the TBODY and each of the TD's to the TR
+  let tableBody = table.tBodies[0];
   let tableRow = document.createElement('tr');
-  tBody.appendChild(tableRow);
- 
-    let td = document.createElement('td');
-    tableRow.appendChild(td);
-    td.textContent = '';
-    td = document.createElement('td');
-    tableRow.appendChild(td);
-    td.textContent = items;
-    td = document.createElement('td');
-    tableRow.appendChild(td);
-    td.textContent = quantity;
+  tableBody.appendChild(tableRow);
 
- 
-
+    for (let i = 0; i < 3; i++) {
+      let tabled = document.createElement('td');
+      tableRow.appendChild(tabled);
+    if(i === 0) {
+      tabled.textContent = 'X';
+      tabled.setAttribute('class', 'tableData');
+    } else if(i === 1) {
+      tabled.textContent = 'item';
+    } else {
+      tabled.textContent = 'quan';
+    }
+  }
 }
 
 function removeItemFromCart(event) {
-
+  console.log(event);
+  table.deleteRow(event.isTrusted);
   // TODO: When a delete link is clicked, use cart.removeItem to remove the correct item
   // TODO: Save the cart back to local storage
   // TODO: Re-draw the cart table
